@@ -2,8 +2,6 @@ import Image from 'next/legacy/image'
 import React from 'react'
 import styled from 'styled-components'
 
-import BossImg from './../../../public/boss.png'
-
 const BossesSection = styled.section`
     height: auto;
 `

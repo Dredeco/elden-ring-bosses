@@ -2,10 +2,10 @@
 
 import Image from 'next/image'
 import styles from './page.module.css'
-import Bosses from './components/bosses'
 import { useEffect, useState } from 'react'
 import getData from './api/api'
-import Header from './components/header'
+import Header from './components/Header'
+import Bosses from './components/Bosses'
 
 export default function Home() {
   let [bossesInfo, setBossesInfo] = useState([])
