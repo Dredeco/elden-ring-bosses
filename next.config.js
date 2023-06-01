@@ -2,6 +2,7 @@
 const nextConfig = {
     images: {
         domains: ['eldenring.fanapis.com'],
+        unoptimized: true,
     }
 }
 

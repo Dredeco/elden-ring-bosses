@@ -5,6 +5,7 @@ import styles from './page.module.css'
 import Bosses from './components/bosses'
 import { useEffect, useState } from 'react'
 import getData from './api/api'
+import Header from './components/header'
 
 export default function Home() {
   let [bossesInfo, setBossesInfo] = useState([])
@@ -16,7 +17,7 @@ export default function Home() {
   return (
     
     <main className={styles.main}>
-      <h1>Elden Ring</h1>
+      <Header />
       <Bosses BossesData={bossesInfo} />
     </main>
   )
