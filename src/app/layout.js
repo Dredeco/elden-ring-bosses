@@ -1,5 +1,8 @@
-import './globals.css'
+import StyledComponentsRegistry from '@/lib/registry';
 import { EB_Garamond } from 'next/font/google'
+import Head from 'next/head';
+
+import './globals.css'
 
 const EBGaramond = EB_Garamond({ subsets: ['latin'] })
 
@@ -11,7 +14,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR, en">
-      <body className={EBGaramond.className}>{children}</body>
+      <body className={EBGaramond.className}>
+        <StyledComponentsRegistry>
+          {children}
+        </StyledComponentsRegistry>
+      </body>
     </html>
   )
 }
