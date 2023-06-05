@@ -15,9 +15,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR, en">
       <body className={EBGaramond.className}>
-        <StyledComponentsRegistry>
           {children}
-        </StyledComponentsRegistry>
       </body>
     </html>
   )

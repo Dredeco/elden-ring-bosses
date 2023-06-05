@@ -1,4 +1,5 @@
 import Image from 'next/legacy/image'
+import Link from 'next/link'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -31,7 +32,7 @@ const BossCard = styled.li`
     padding: .5rem .5rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     text-align: center;
     border: 1px solid gold;
@@ -41,7 +42,17 @@ const BossCard = styled.li`
         margin: .5rem 0;
     }
     span {
-        margin: .1rem 0;
+        margin: .5rem 0;
+    }
+    a {
+        text-decoration: none;
+        color: #fff;
+        background-color: goldenrod;
+        padding: .5rem 1rem;
+        border-radius: 10px;
+        border: 1px solid #555;
+        text-transform: uppercase;
+        font-weight: 700;
     }
 `
 
@@ -67,6 +78,7 @@ export default function Bosses(BossesData) {
                         <h3>{boss.name}</h3>
                         <h4>Location</h4>
                         <span>{boss.location}</span>
+                        <Link href={`./boss/${boss.id}`}>Mais detalhes</Link>
                     </BossCard>
                     )}
                 })}
