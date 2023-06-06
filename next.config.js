@@ -24,7 +24,4 @@ module.exports = {
       unoptimized: true,
   },
   output: 'export',
-  experimental: {
-    appDir: true
-  }
 }
