@@ -1,3 +1,4 @@
+"use client"
 import Image from 'next/legacy/image'
 import Link from 'next/link'
 import React, { useState, useEffect } from 'react'

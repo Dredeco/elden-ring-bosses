@@ -1,3 +1,5 @@
+"use client"
+
 import { EB_Garamond } from 'next/font/google'
 import Head from 'next/head';
 
