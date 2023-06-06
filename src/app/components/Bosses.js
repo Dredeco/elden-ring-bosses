@@ -1,7 +1,9 @@
 import Image from 'next/legacy/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import Loading from './loading'
+import { getData } from '../api/api'
 
 const BossesSection = styled.section`
     height: auto;
@@ -56,35 +58,54 @@ const BossCard = styled.li`
     }
 `
 
-export default function Bosses(BossesData) {
-  let Bosses = BossesData.BossesData;
+async function getBosses() {
+    let bosses = await getData()
+    return bosses
+  }
 
-    return (
-    <BossesSection>
-        <Container>
-            <BossesList>
+export default function Bosses() {
+    let [isLoading, setIsLoading] = useState(true)
+    let [bosses, setBosses] = useState([])
+  
+    useEffect(() => {
+        setTimeout(() => (
+            getBosses()
+            .then((data) => setBosses(data))
+        ), 100)
+      setTimeout(() => (
+        setIsLoading(false)
+      ), 3000)
+    }, [])
 
-                {Bosses.map((boss) => {
-                    if (boss.image != null) {
-                     return (
-                     <BossCard key={boss.id}>
-                        <Image 
-                            src={`${boss.image}`}
-                            width={300}
-                            height={120}
-                            objectFit='cover'
-                            objectPosition='center'
-                        />
-                        <h3>{boss.name}</h3>
-                        <h4>Location</h4>
-                        <span>{boss.location}</span>
-                        <Link href={`./boss/${boss.id}`}>Mais detalhes</Link>
-                    </BossCard>
-                    )}
-                })}
-
-            </BossesList>
-        </Container>
-    </BossesSection>
-  )
-}
+    if (isLoading) {
+       return <Loading />
+    } else {
+        return (
+            <BossesSection>
+                <Container>
+                    <BossesList>
+                        {bosses.map((boss) => {
+                            if (boss.image != null) {
+                             return (
+                             <BossCard key={boss.id}>
+                                <Image 
+                                    src={`${boss.image}`}
+                                    width={300}
+                                    height={120}
+                                    objectFit='cover'
+                                    objectPosition='center'
+                                />
+                                <h3>{boss.name}</h3>
+                                <h4>Location</h4>
+                                <span>{boss.location}</span>
+                                <Link href={`./boss/${boss.id}`} id={boss.id}>Mais detalhes</Link>
+                            </BossCard>
+                            )}
+                        })}
+        
+                    </BossesList>
+                </Container>
+            </BossesSection>
+          )
+        }        
+    }

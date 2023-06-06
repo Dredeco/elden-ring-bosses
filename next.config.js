@@ -15,6 +15,7 @@ if (isGithubActions) {
 module.exports = {
   assetPrefix: assetPrefix,
   basePath: basePath,
+  trailingSlash: true,
   compiler: {
     styledComponents: true,
 },

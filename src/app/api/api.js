@@ -2,12 +2,24 @@ let limit = 50
 let url = `https://eldenring.fanapis.com/api/bosses?limit=${limit}`
 
 
-export default async function getData() {
-    let bossesData = null
+export async function getData() {
+    let data
 
     await fetch (url)
     .then((response) => response.json())
-    .then((json) => bossesData = json.data)
+    .then((json) => data = json.data)
 
-    return bossesData
+    return data
+}
+
+export async function getDataById(id) {
+    let data
+    let BossUrl = `https://eldenring.fanapis.com/api/bosses/${id}`
+
+    data = await fetch (BossUrl)
+    .then((response) => response.json())
+    .then((json) => (json.data))
+    .then((data) => (data))
+
+    return data
 }

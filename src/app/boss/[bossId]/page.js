@@ -1,35 +1,15 @@
 "use client"
-
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Image from 'next/legacy/image'
+import {getDataById} from '@/app/api/api'
+import Link from 'next/link'
+import Loading from './loading'
 
-export const getStaticPaths = async () => {
-  const limit = 50
-  const api = `https://eldenring.fanapis.com/api/bosses`
-
-  const res = await fetch(`${api}?limit=${limit}`)
-  const data = await res.json()
-
-  const paths = data.data.map((boss) => {
-    return {
-      params: { bossId: boss.id },
-    }
-  })
-
-  return {
-    paths,
-    fallback: false,
-  }
+async function getBosses(id) {
+  let bosses = await getDataById(id)
+  return bosses
 }
-
-export const getBossInfo = async (params) => {
-  const id = (params.bossId)
-  const res = await fetch(`https://eldenring.fanapis.com/api/bosses/${id}`)
-  const data = await res.json().then((data) => (data.data))
-
-  return data
-};
 
 const Container = styled.div`
     margin: 1rem 2%;
@@ -38,40 +18,44 @@ const Container = styled.div`
     text-align: center;
     flex-direction: column;
 `
-
 const GeneralInfo = styled.div`
 `
 
-
 export default function BossInfo({params}) {
-  let [boss, setBoss] = useState({})
+  let [boss, setBoss] = useState({});
+  let [isLoading, setIsLoading] = useState(true)
+  let id = params.bossId;
 
   useEffect(() => {
-    getBossInfo(params).then((data) => setBoss(data))
+    getBosses(id)
+    .then((data) => setBoss(data))
+    setTimeout(() => (
+      setIsLoading(false)
+    ), 3000)
   }, [])
 
-  let drop = new Array(2)
-  drop = boss.drops
+  if (isLoading) {
+    return <Loading />
+  }
+    return (
+      <Container>
+        <h1>{boss.name}</h1>
+        <Image 
+            src={`${boss.image}`}
+            width={300}
+            height={120}
+            objectFit='cover'
+            objectPosition='center'
+        />
+        <span>{boss.description}</span>
+        <GeneralInfo>
+          <p><strong>Location:</strong> {boss.location}</p>
+          <p><strong>Region:</strong> {boss.region}</p>
+          <p><strong>Runes:</strong> {boss.drops[0]}</p>
+          <p><strong>Item:</strong> {boss.drops[1]}</p>
+        </GeneralInfo>
 
-  console.log(drop)
-
-  return (
-    <Container>
-      <h1>{boss.name}</h1>
-      <Image 
-          src={`${boss.image}`}
-          width={300}
-          height={120}
-          objectFit='cover'
-          objectPosition='center'
-      />
-      <span>{boss.description}</span>
-      <GeneralInfo>
-        <p><strong>Location:</strong> {boss.location}</p>
-        <p><strong>Region:</strong> {boss.region}</p>
-        <p><strong>Runes:</strong> {boss.drops}</p>
-        <p><strong>Item:</strong> {boss.drops}</p>
-      </GeneralInfo>
-    </Container>
-  )
+        <Link href='#'>Voltar</Link>
+      </Container>
+    )
 }
