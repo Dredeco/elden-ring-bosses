@@ -18,10 +18,13 @@ module.exports = {
   trailingSlash: true,
   compiler: {
     styledComponents: true,
-},
-images: {
-    domains: ['eldenring.fanapis.com'],
-    unoptimized: true,
-},
-output: 'export',
+  },
+  images: {
+      domains: ['eldenring.fanapis.com'],
+      unoptimized: true,
+  },
+  output: 'export',
+  experimental: {
+    appDir: true
+  }
 }
