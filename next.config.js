@@ -23,5 +23,4 @@ images: {
     domains: ['eldenring.fanapis.com'],
     unoptimized: true,
 },
-output: 'export',
 }
